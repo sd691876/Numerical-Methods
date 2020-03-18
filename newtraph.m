@@ -1,4 +1,4 @@
-function [root,ea,iter]=newtraph(func,dfunc,xr,es,maxit,varargin)
+function [root,fx,ea,iter]=newtraph(func,dfunc,xr,es,maxit,varargin)
 % newtraph: Newton-Raphson root location zeroes
 % [root,ea,iter]=newtraph(func,dfunc,xr,es,maxit,p1,p2,...):
 % uses Newton-Raphson method to find the root of func
@@ -24,4 +24,4 @@ iter = iter + 1;
 if xr ~= 0, ea = abs((xr - xrold)/xr) * 100; end
 if ea <= es | iter >= maxit, break, end
 end
-root = xr;
+root = xr;fx = func(xr, varargin{:});

@@ -1,4 +1,4 @@
-function [root,ea,iter]=secant(func,x0,xr,es,maxit,varargin)
+function [root,fx,ea,iter]=secant(func,x0,x1,es,maxit,varargin)
 % newtraph: Newton-Raphson root location zeroes
 % [root,ea,iter]=newtraph(func,dfunc,xr,es,maxit,p1,p2,...):
 % uses Newton-Raphson method to find the root of func
@@ -18,10 +18,11 @@ if nargin<4|isempty(es),es=0.0001;end
 if nargin<5|isempty(maxit),maxit=50;end
 iter = 0;
 while (1)
-xrold = xr;
-xr = xr - func(xr)*(x0-xr)/(func(x0)-func(xr));
+xrold1 = x1;
+x1 = x1 - func(x1)*(x0-x1)/(func(x0)-func(x1));
+x0 = xrold1;
 iter = iter + 1;
-if xr ~= 0, ea = abs((xr - xrold)/xr) * 100; end
+if x1 ~= 0, ea = abs((x1 - xrold1)/x1) * 100; end
 if ea <= es | iter >= maxit, break, end
 end
-root = xr;
+root = x1;fx = func(x1, varargin{:});

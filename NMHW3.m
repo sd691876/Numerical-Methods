@@ -1,0 +1,14 @@
+t=4;
+v=36;
+g=9.81;
+m=80;
+x0=0.25;
+e=0.1;
+x0=0.1;
+x1=0.2;
+vt=@(Cd) sqrt(g*m/Cd)*tanh(sqrt(g*Cd/m)*t)-v;
+syms Cd;
+dvt=diff(vt,Cd);
+dvt=matlabFunction(dvt);
+[root_nr,ea_nr,iter_nr]=newtraph(vt,dvt,x0,e,100);
+[root_sc,ea_sc,iter_sc]=secant(vt,x0,x1,e,100);

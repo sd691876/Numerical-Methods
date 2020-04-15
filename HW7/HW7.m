@@ -1,5 +1,5 @@
-function [T iter ea] = HW7(n,Tu,Td,Tl,Tr,es,maxiter,t)
-    reg = ones(n+1,n+1)*t;
+function [T, iter, ea] = HW7(n,Tu,Td,Tl,Tr,es,maxiter)
+    reg = zeros(n+1,n+1);
     reg(1,2:end-1)   = Tu;
     reg(:,1)         = Tl;
     reg(end,2:end-1) = Td;
@@ -17,12 +17,12 @@ function [T iter ea] = HW7(n,Tu,Td,Tl,Tr,es,maxiter,t)
        ea=100*max(max(abs((T-M)./T)));
        if iter>=maxiter || ea<=es, break, end
     end
-    %{
-    [c, h] = contour((reg),-10:100/n:100);
+    
+    [c, h] = contour((reg),0:100/n:100);
     axis([0,n+1,0,n+1]);    colormap('jet');
     clabel(c,h);
     [X,Y] = meshgrid(1:n-1,1:n-1);
     figure;
-    surface(X,Y,T','edgecolor','none');
-    %}
+    surf(X,Y,T,'edgecolor','none');
+    colormap('jet');
 end

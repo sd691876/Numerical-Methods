@@ -1,4 +1,4 @@
-function y = Newtint(x,y,xx)
+function yint = Newtint(x,y,xx)
 % Newtint: Newton interpolating polynomial
 % yint = Newtint(x,y,xx): Uses an (n - 1)-order Newton
 % interpolating polynomial based on n data points (x, y)
@@ -26,9 +26,7 @@ end
 % use the finite divided differences to interpolate
 xt = 1;
 yint(1) = b(1,1);
-y =zeros(1,length(x)-1);
 for j = 1:n-1
 xt = xt*(xx-x(j));
 yint = yint+b(1,j+1)*xt;
-y(1,j) =yint;
 end

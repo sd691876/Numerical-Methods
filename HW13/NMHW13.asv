@@ -34,9 +34,9 @@ for j = 1 : 2
 end
 n = 0:0.01:5;
 figure;
-plot(n,f(n) + yy,x_pole,y_order,'o',[0 5],[yy yy]);
-legend('Function curve', 'Quadratic interpolation', ...
-       'Cubic interpolation', num2str(yy,'y = %.2f'));
+c = f(n);
+plot(n,f(n) + yy,x_pole,y_order,'o');
+legend('Function curve','Quadratic interpolation','Cubic interpolation');
 [Min,order] = min(y_order_ea)
 
 % Find Inverse function
@@ -50,27 +50,24 @@ yy = Newtint(x,y,g(0.93));
 %}
 %%
 % Switch x and y
+x = [0 1 2 3 4 5];
+y = [0 0.5 0.8 0.9 0.941176 0.961538];
 yy = 0.93;
+[c,d] = sort(abs(y-yy));
+x_order = zeros(1,2);
+x_order_ea = zeros(1,2);
 f  = @(x) x.^2./(1 + x.^2);
 syms x
 g  = finverse(f,x);
 g = matlabFunction(g);
 xx = g(yy);
-x = [0 1 2 3 4 5];
-y = [0 0.5 0.8 0.9 0.941176 0.961538];
-[c,d] = sort(abs(y-yy));
-
-x_order = zeros(1,2);
-x_order_ea = zeros(1,2);
 for j = 1:2
     x_order(j)    = Newtint(y(d(1:j+2)),x(d(1:j+2)),yy);
     x_order_ea(j) = abs((xx-x_order(j))/xx)*100; 
 end
-n = 0:0.01:5;
-figure;
-plot(n,f(n),x_order,yy,'o',[0 5],[yy yy],xx,yy,'diamond');
-legend('Function curve', 'Quadratic interpolation', ...
-       'Cubic interpolation', num2str(yy,'y = %.2f'));
+n = 1:0.01:5;
+%figure;
+%plot(n,f(n),x_order,yy,'o');
 [Min,order] = min(x_order_ea)
 
 

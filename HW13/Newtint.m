@@ -25,8 +25,8 @@ end
 end
 % use the finite divided differences to interpolate
 xt = 1;
-yint(1) = b(1,1);
+yint = b(1,1);
 for j = 1:n-1
-xt = xt*(xx-x(j));
+xt = xt.*(xx-x(j));
 yint = yint+b(1,j+1)*xt;
 end

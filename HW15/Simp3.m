@@ -12,8 +12,6 @@ for i = 1 :n-1
     else
        s = s + 4*func(x,varargin{:});
     end
-    %es = es + dfunc(i,varargin{:});
 end
-%es = -(b-a).^3/(12*n.^3)*(es + dfunc(n,varargin{:}));
 s = s + func(b,varargin{:});
 I = h/3 *s; % I = (b - a) * s/(3*n)

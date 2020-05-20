@@ -1,4 +1,4 @@
-function [I,ea] = GaussQuad2p(func,a,b,n,f_ans,varargin)
+function I = GaussQuad2p(func,a,b,n,varargin)
 if nargin<3,error('at least 3 input arguments required'),end
 if ~(b>a),error('upper bound must be greater than lower'),end
 if nargin<4||isempty(n),n=100;end
@@ -13,4 +13,3 @@ for i = 1 : n
     x = x + h;
 end
 I = cxd1 * s;
-ea = abs((f_ans-I)/f_ans);

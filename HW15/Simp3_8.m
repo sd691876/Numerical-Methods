@@ -1,4 +1,4 @@
-function [I,ea] = Simp3_8(func,a,b,n,f_ans,varargin)
+function I = Simp3_8(func,a,b,n,varargin)
 if nargin<3,error('at least 3 input arguments required'),end
 if ~(b>a),error('upper bound must be greater than lower'),end
 if nargin<4||isempty(n),n=100;end
@@ -15,4 +15,3 @@ for i = 1 :n-1
 end
     s = s + func(b,varargin{:});
     I = 3*h/8*s;
-ea = abs((f_ans - I)/f_ans);

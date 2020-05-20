@@ -1,4 +1,4 @@
-function [I,ea] = Trap(func,a,b,n,f_ans,varargin)
+function I = Trap(func,a,b,n,varargin)
 % trap: composite trapezoidal rule quadrature
 % I = trap(func,a,b,n,pl,p2,...):
 % composite trapezoidal rule
@@ -20,4 +20,3 @@ for i = 1 : n-1
 end
 s = s + func(b,varargin{:});
 I = (b - a) * s/(2*n);
-ea = abs((f_ans-I)/f_ans);

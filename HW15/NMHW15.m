@@ -8,30 +8,42 @@ f_ans = double(int(f(x), a, b));
 % Tr
 n_tr = 1;
 while(1)
-    [I_tr, es_tr] = Trap(f, a, b, n_tr ,f_ans);
-    if abs(es_tr)*100<et,break; end
+    I_tr = Trap(f, a, b, n_tr);
+    es_tr = abs((f_ans - I_tr)/f_ans)*100;
+    if es_tr<et,break; end
     n_tr = n_tr + 1;   
 end
 % 31
 n_simp3 = 1;
 while(1)
-    [I_simp3, es_simp3] = Simp3(f, a, b, n_simp3 ,f_ans);
-    if abs(es_simp3)*100<et,break; end
+    I_simp3 = Simp3(f, a, b, n_simp3);
+    es_simp3 = abs((f_ans - I_simp3)/f_ans)*100;
+    if es_simp3<et,break; end
     n_simp3 = n_simp3 + 1; 
 end
 % 38+31
 n_simp38 = 1;
 while(1)
-    [I_simp38, es_simp38] = Simp38(f, a, b, n_simp38 ,f_ans);
-    if abs(es_simp38)*100<et,break; end
+    I_simp38  = Simp38(f, a, b, n_simp38);
+    es_simp38 = abs((f_ans - I_simp38)/f_ans)*100;
+    if es_simp38<et,break; end
     n_simp38 = n_simp38 + 1; 
 end
 % 38
 n_simp3_8 = 1;
 while(1)
-    [I_simp3_8, es_simp3_8] = Simp3_8(f, a, b, n_simp3_8 ,f_ans);
-    if abs(es_simp3_8)*100<et,break; end
+    I_simp3_8 = Simp3_8(f, a, b, n_simp3_8);
+    es_simp3_8 = abs((f_ans - I_simp3_8)/f_ans)*100;
+    if es_simp3_8<et,break; end
     n_simp3_8 = n_simp3_8 + 1; 
+end
+% 2-points Gaussian Quadrature
+n_GaussQuad2p = 1;
+while(1)
+    I_GaussQuad2p = GaussQuad2p(f, a, b, n_GaussQuad2p);
+    es_GaussQuad2p = abs((f_ans - I_GaussQuad2p)/f_ans)*100;
+    if es_GaussQuad2p<et,break; end
+    n_GaussQuad2p = n_GaussQuad2p + 1; 
 end
 
 

@@ -16,17 +16,26 @@ title('\theta_0 = \pi/2'); xlabel('t'); ylabel('\theta(deg)');
 legend('Approximate','Exact');
 %%
 p  = 10000;
-I0  = 0;
-r0  = 0;
+a  = 0.002/7;
+r  = 0.15;
 d  = [0 50];
-f = @(t,x) [-x(4).*x(1).*x(2); ... S
-            x(4).*x(1).*x(2)-x(5).*x(2); ...I
-            x(5).*x(2);
-            -0.028./(x(1)+x(2)+x(3))./(t.^2); ... a
-            -0.3./(t.^2)];
-[t,y] = ode45(f ,[0.1 50] ,[p I0 r0 0 0]);
-plot(t,y(:,5));
-
+f = @(t,x) [-a.*x(1).*x(2); ... S
+            a.*x(1).*x(2)-r.*x(2); ...I
+            r.*x(2)];
+[t,y] = ode45(f ,[0 50] ,[p 1 0]);
+plot(t,y(:,1),t,y(:,2),t,y(:,3));
+legend('suseptible','infected','recovered');
+xlabel('Day'); ylabel('Population');
+figure;
+death = 0.01;
+f_d = @(t,x) [-a.*x(1).*x(2) ; ... S
+            a.*x(1).*x(2)-r.*x(2) - death.*x(2); ...I
+            r.*x(2) - death.*x(2)];
+[t_d,y_d] = ode45(f_d ,[0 50] ,[p 1 0]);
+plot(t_d,y_d(:,1),t_d,y_d(:,2),t_d,y_d(:,3));
+legend('suseptible','infected','recovered');
+xlabel('Day'); ylabel('Population');
+death = p - sum(y_d(end,:));
 %%
 f = @(t,y) 5*(y - t^2);
 str = erase(func2str(f),'@(t,y)');
@@ -38,11 +47,7 @@ n = linspace(0,5,100);
 [t_o45,y_o45] = ode45(f,t,y0);
 [t_o23s,y_o23s] = ode23s(f,t,y0);
 [t_o23tb,y_o23tb] = ode23tb(f,t,y0);
-plot(n,s_p(n,y0));  hold on;
-plot(t_rk4,y_rk4);
-plot(t_o45,y_o45);
-plot(t_o23s,y_o23s); 
-plot(t_o23tb,y_o23tb); hold off;
+plot(n,s_p(n,y0),t_rk4,y_rk4,t_o45,y_o45,t_o23s,y_o23s,t_o23tb,y_o23tb);
 axis([0 5 -30 30]); xlabel('t'); ylabel('y');
 title(['dy/dt=',str,num2str(y0,',y(0)=%.2f'),',Ae^{5t}+t^2+0.4t+0.08']);
 legend('t^2 + 0.4t + 0.08','rk4','ode45','ode23s','ode23tb');

@@ -15,6 +15,7 @@ subplot(122);plot(t_pi2,y_pi2(:,1)*180/pi,t_pi2,s_pi2(g,l,t_pi2)*180/pi);
 title('\theta_0 = \pi/2'); xlabel('t'); ylabel('\theta(deg)');
 legend('Approximate','Exact');
 %%
+figure;
 p  = 10000;
 a  = 0.002/7;
 r  = 0.15;
@@ -30,13 +31,14 @@ figure;
 death = 0.01;
 f_d = @(t,x) [-a.*x(1).*x(2) ; ... S
             a.*x(1).*x(2)-r.*x(2) - death.*x(2); ...I
-            r.*x(2) - death.*x(2)];
+            r.*x(2) ];
 [t_d,y_d] = ode45(f_d ,[0 50] ,[p 1 0]);
 plot(t_d,y_d(:,1),t_d,y_d(:,2),t_d,y_d(:,3));
 legend('suseptible','infected','recovered');
 xlabel('Day'); ylabel('Population');
-death = p - sum(y_d(end,:));
+death = floor(p - sum(y_d(end,:)));
 %%
+figure;
 f = @(t,y) 5*(y - t^2);
 str = erase(func2str(f),'@(t,y)');
 y0 = 0.08;
